@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'worker-node' }   // runs on worker node
+    agent { label 'worker-node' }
 
     stages {
 
@@ -22,12 +22,11 @@ pipeline {
             }
         }
 
-        // ✅ ADD YOUR STAGE HERE
-        stage('Run Container') {
+        stage('Run with Docker Compose') {
             steps {
                 sh '''
-                  docker rm -f petclinic || true
-                  docker run -d -p 8080:8080 --name petclinic spring-petclinic:1.0
+                  docker-compose down || true
+                  docker-compose up -d
                 '''
             }
         }
