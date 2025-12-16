@@ -25,6 +25,7 @@ pipeline {
         stage('Run with Docker Compose') {
             steps {
                 sh '''
+                  docker ps -q | xargs -r docker rm -f
                   docker compose down || true
                   docker compose up -d
                 '''
