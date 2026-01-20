@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'worker-node-1' }
+    agent { label 'jenkins-worker' }
 
     stages {
 
