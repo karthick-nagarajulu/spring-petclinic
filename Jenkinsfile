@@ -22,14 +22,20 @@ pipeline {
             }
         }
 
-        stage('Run with Docker Compose') {
-            steps {
-                sh '''
-                  docker ps -q | xargs -r docker rm -f
-                  docker compose down || true
-                  docker compose up -d
-                '''
-            }
-        }
+stage('Run with Docker Compose') {
+    steps {
+        sh '''
+        echo "Stopping and removing existing containers"
+        docker compose down --remove-orphans || true
+
+        echo "Removing old petclinic container if exists"
+        docker rm -f petclinic_app || true
+
+        echo "Starting containers"
+        docker compose up -d
+        '''
+    }
+}
+
     }
 }
